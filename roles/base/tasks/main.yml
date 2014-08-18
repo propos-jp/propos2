@@ -5,7 +5,8 @@
     - software-properties-common
     - python
     - python-pip
-    - mysql-server
+    - python-configparser
+    - python-mysqldb
 
 - name: docker-py install 
   pip: name=docker-py

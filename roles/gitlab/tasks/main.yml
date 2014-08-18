@@ -2,6 +2,8 @@
   shell: docker inspect mysql | grep IPAddres | awk -F'"' '{print $4}'
   register: ip
 
-- name: debug
-  debug: var=ip
+- name: create mysql db
+  mysql_db: login_host={{ip.stdout}} login_user=root login_password= name=gitlabhq_production encoding=utf8 collation=utf8_unicode_ci
 
+- name: create gitlab user
+  mysql_user: login_host={{ip.stdout}} login_user=root login_password=  name=gitlab host=172.17.%.% password=password priv=gitlabhq_production.*:ALL,GRANT
