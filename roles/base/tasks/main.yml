@@ -1,0 +1,14 @@
+- name: base module install
+  apt: name={{ item }} update_cache=yes
+  with_items:
+    - git
+    - software-properties-common
+    - python
+    - python-pip
+    - mysql-server
+
+- name: docker-py install 
+  pip: name=docker-py
+
+
+

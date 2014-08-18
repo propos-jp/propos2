@@ -1,0 +1,7 @@
+- name: install check
+  shell:  whereis dokcer
+  register: result
+
+- name: docker install
+  shell: curl -sSL https://get.docker.io/ubuntu/ | sudo sh
+  when: result.rc not in [0,1]

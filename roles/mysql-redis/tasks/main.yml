@@ -1,0 +1,6 @@
+- name: mysql container
+  docker: image=sameersbn/mysql:latest name=mysql detach=true volumes=/opt/mysql/data:/var/lib/mysql
+
+- name: redis container
+  docker: image=sameersbn/redis:latest name=redis detach=true
+

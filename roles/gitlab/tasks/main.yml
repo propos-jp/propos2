@@ -1,0 +1,7 @@
+- name: mysql IP address
+  shell: docker inspect mysql | grep IPAddres | awk -F'"' '{print $4}'
+  register: ip
+
+- name: debug
+  debug: var=ip
+
