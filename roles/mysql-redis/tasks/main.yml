@@ -1,6 +1,9 @@
 - name: mysql container
   docker: image=sameersbn/mysql:latest name=mysql detach=true volumes=/opt/mysql/data:/var/lib/mysql
 
+- name: wait for mysql server start 30 seconds
+  pause: seconds=30
+
 - name: redis container
   docker: image=sameersbn/redis:latest name=redis detach=true
 

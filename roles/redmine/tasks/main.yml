@@ -1,0 +1,20 @@
+- name: mysql IP address
+  shell: sudo docker inspect mysql | grep IPAddres | awk -F'"' '{print $4}'
+  register: ip
+
+- name: create mysql db
+  mysql_db: login_host={{ip.stdout}} login_user=root login_password= name=redmin_production encoding=utf8 collation=utf8_unicode_ci
+
+
+- name: create redmine user
+  mysql_user: login_host={{ip.stdout}} login_user=root login_password=  name=redmine host=172.17.%.% password=password priv=redmine_production.*:ALL,GRANT
+
+
+- name: redmine init
+  docker: image=sameersbn/redmine:2.5.2 name=redmine stdin_open=true tty=true links=mysql:mysql volumes=/opt/redmine/files:/redmine/files env="DB_USER=redmine,DB_PASS=password,DB_NAME=redmine_production" command="app:db:migrate"
+
+
+- name: redmine start
+  docker: image=sameersbn/redmine:2.5.2 name=redmine links=mysql:mysql volumes=/opt/redmine/files:/redmine/files env="DB_USER=redmine,DB_PASS=password,DB_NAME=redmine_production" detach=true 
+
+
