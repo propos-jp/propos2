@@ -1,10 +1,8 @@
-- hosts: test-servers
+- hosts: localhost
   sudo: yes
   roles:
     - base
     - docker
-    - mysql-redis
-    - redmine
 
 
 

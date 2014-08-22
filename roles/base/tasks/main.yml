@@ -11,5 +11,11 @@
 - name: docker-py install 
   pip: name=docker-py
 
+- name: mkdir /opt
+  file: path=/opt state=directory
+
+- name: mkdir /opt/shell
+  file: path=/opt/shell state=directory
+ 
 
 
