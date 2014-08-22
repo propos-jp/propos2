@@ -1,3 +1,6 @@
 - name: docker install
   script: install-docker.sh creates=/opt/shell/docker-done.txt
 
+- name: create docker-done.txt
+  file: path=/opt/shell/docker-done.txt state=touch
+

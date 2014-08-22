@@ -9,12 +9,21 @@
 - name: create redmine user
   mysql_user: login_host={{ip.stdout}} login_user=root login_password=  name=redmine host=172.17.%.% password=password priv=redmine_production.*:ALL,GRANT
 
+- name: create redmine directory
+  file: path=/opt/redmine/files state=directory
 
-- name: redmine init
-  docker: image=sameersbn/redmine:2.5.2 name=redmine stdin_open=true tty=true links=mysql:mysql volumes=/opt/redmine/files:/redmine/files env="DB_USER=redmine,DB_PASS=password,DB_NAME=redmine_production" command="app:db:migrate"
+- name: redmine-init
+  script: redmine-init.sh creates=/opt/shell/redmine-init-done.txt
+
+- name: redmine-init-done
+  file: path=/opt/shell/redmine-init-done.txt state=touch
+
+- name: redmine-start
+  script: redmine-start.sh
 
 
-- name: redmine start
-  docker: image=sameersbn/redmine:2.5.2 name=redmine links=mysql:mysql volumes=/opt/redmine/files:/redmine/files env="DB_USER=redmine,DB_PASS=password,DB_NAME=redmine_production" detach=true 
+
+
+
 
 
